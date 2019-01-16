@@ -9,10 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 public class GuavaCache {
 
-    public static final LoadingCache<Integer,Student> cache;
+    public static LoadingCache<Integer,Student> getGuavaCache(){
+        return buildCache();
+    }
 
-    static {
-        cache = CacheBuilder.newBuilder()
+    private static LoadingCache<Integer,Student> buildCache() {
+
+        return CacheBuilder.newBuilder()
                 /**
                  * concurrencyLevel并发级别设置为2,表示可以同时写缓存的线程数
                  * 两个线程同时写入同一个value怎么处理?Key相同会进行覆盖;如果有移除回调监听,会进行通知
@@ -59,6 +62,7 @@ public class GuavaCache {
                                 student.setClassName("P10");
                                 return student;
                             }
-                        });
+                        }
+                );
     }
 }
